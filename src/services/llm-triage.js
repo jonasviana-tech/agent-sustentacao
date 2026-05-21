@@ -10,9 +10,16 @@ async function loadSystemPrompt() {
   return fs.readFile(promptPath, 'utf8');
 }
 
+function stripMarkdownFences(text) {
+  return String(text || '')
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
+}
+
 function safeJsonParse(text) {
   if (typeof text !== 'string') return null;
-  const trimmed = text.trim();
+  const trimmed = stripMarkdownFences(text);
   try {
     return JSON.parse(trimmed);
   } catch {
@@ -91,9 +98,13 @@ async function callGemini({ systemPrompt, userContent, model, apiKey }) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(finalModel)}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
   const resp = await axios.post(url, {
-    systemInstruction: { role: 'system', parts: [{ text: systemPrompt }] },
+    systemInstruction: { parts: [{ text: systemPrompt }] },
     contents: [{ role: 'user', parts: [{ text: userContent }] }],
-    generationConfig: { temperature: 0.2, maxOutputTokens: 2048 },
+    generationConfig: {
+      temperature: 0.2,
+      maxOutputTokens: 8192,
+      responseMimeType: 'application/json',
+    },
   }, { headers: { 'content-type': 'application/json' }, timeout: 90_000 });
 
   const text = (resp?.data?.candidates?.[0]?.content?.parts || [])

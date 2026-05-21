@@ -13,7 +13,7 @@ services:
       - key: LLM_PROVIDER
         value: gemini
       - key: LLM_MODEL
-        value: gemini-2.0-flash
+        value: gemini-2.5-flash
       - key: GEMINI_API_KEY
         sync: false          # valor secreto: preencher no painel
       - key: WEBHOOK_SHARED_SECRET
