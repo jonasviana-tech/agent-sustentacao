@@ -22,3 +22,5 @@ services:
         sync: false
       - key: FRESHDESK_DOMAIN
         value: tech4humans.freshdesk.com
+      - key: FRESHDESK_API_KEY
+        sync: false          # valor secreto: preencher no painel

@@ -73,6 +73,7 @@ function load() {
 
     freshdesk: {
       domain: process.env.FRESHDESK_DOMAIN || '',
+      apiKey: process.env.FRESHDESK_API_KEY || '',
     },
   });
 }

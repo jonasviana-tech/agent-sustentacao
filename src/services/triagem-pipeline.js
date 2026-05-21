@@ -5,6 +5,7 @@ const { parseTicket } = require('./ticket-parser');
 const { identifyClient } = require('./client-identifier');
 const { searchDocs } = require('./kb-search');
 const { runTriage } = require('./llm-triage');
+const { addPrivateNote } = require('./freshdesk-api');
 const { extractKeywords } = require('../utils/text');
 
 /**
@@ -142,6 +143,24 @@ async function runTriagemPipeline(rawPayload) {
   triagem.responsavel = clientInfo.responsavel;
 
   const resumoParaAnotacao = buildAnnotation(triagem, ticket);
+
+  // Grava nota privada diretamente no Freshdesk (fire-and-forget: não bloqueia a resposta)
+  if (ticket.id && cfg.freshdesk.apiKey) {
+    const noteHtml = resumoParaAnotacao
+      .replace(/\n/g, '<br>')
+      .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+
+    addPrivateNote(ticket.id, noteHtml).catch((err) => {
+      console.error(JSON.stringify({
+        level: 'error',
+        msg: 'freshdesk_note_failed',
+        ticketId: ticket.id,
+        error: err.message,
+        status: err?.response?.status,
+        ts: new Date().toISOString(),
+      }));
+    });
+  }
 
   return {
     ok: true,
