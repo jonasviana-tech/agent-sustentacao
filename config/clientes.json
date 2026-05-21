@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "fallback": {
+    "jiraProjectKey": "OPS",
+    "jiraIssueTypeName": "Task",
+    "responsavelAccountId": null,
+    "responsavelDisplayName": "Lider de Sustentacao"
+  },
+  "clientes": [
+    {
+      "cliente": "CAIXA Consorcio",
+      "aliases": ["Caixa", "CAIXA", "CEF", "Caixa Consorcio", "Caixa Economica"],
+      "freshdeskCompanyIds": [],
+      "knowledgeBase": [
+        "extracao-flow-caixa-consorcio.md",
+        "extracao-webapp-caixa-homologacao-consorcio.md"
+      ],
+      "projetos": [
+        {
+          "projeto": "Consorcio Pos-Contemplacao",
+          "areaPalavrasChave": [
+            "transferencia",
+            "transferencia de cotas",
+            "bens moveis",
+            "bens imoveis",
+            "TCC",
+            "substituicao de garantia",
+            "backoffice",
+            "esteira",
+            "cpr",
+            "contemplacao",
+            "funchal",
+            "force",
+            "skill",
+            "automacao",
+            "construcao",
+            "reforma",
+            "fila",
+            "workforce"
+          ],
+          "jiraProjectKey": "OPS",
+          "jiraIssueTypeName": "Sustentação",
+          "responsavelAccountId": "T712020:5e59a010-fa2b-42cc-9877-3f1c4634510b",
+          "responsavelDisplayName": "Jordan",
+          "labels": ["triagem-auto", "cliente-caixa", "consorcio"]
+        }
+      ]
+    }
+  ]
+}

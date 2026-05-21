@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: sustentacao-agent
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        generateValue: false
+      # Preencha os valores abaixo no painel do Render (Environment)
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: LLM_MODEL
+        value: gemini-2.0-flash
+      - key: GEMINI_API_KEY
+        sync: false          # valor secreto: preencher no painel
+      - key: WEBHOOK_SHARED_SECRET
+        sync: false
+      - key: API_KEY
+        sync: false
+      - key: FRESHDESK_DOMAIN
+        value: tech4humans.freshdesk.com
